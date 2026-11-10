@@ -102,7 +102,7 @@ Then open `index.html` in a browser (or use Live Server extension in VS Code).
 
 ## Live Application
 
-> Will be available after Vercel deployment at: `https://<your-project>.vercel.app`
+> Will be available after Vercel deployment at: `https://heart-disease-classification-projec.vercel.app/`
 
 ---
 
