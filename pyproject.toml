@@ -1,0 +1,16 @@
+[project]
+name = "heart-disease-classification"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = [
+    "joblib",
+    "numpy",
+    "scikit-learn",
+    "pandas"
+]
+
+[tool.vercel]
+entrypoint = "api.predict:handler"
+
+[tool.uv]
+package = false
