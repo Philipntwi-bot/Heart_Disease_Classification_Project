@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease AI Classifier</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #FFF5F5 0%, #F0F4FF 100%);
+        color: #2C3E50;
+        min-height: 100vh;
+    }
+
+    header {
+        background: linear-gradient(135deg, #C0392B, #17365D);
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    header h1 { font-size: 36px; margin-bottom: 10px; }
+    header p  { font-size: 16px; opacity: 0.85; }
+
+    .container { max-width: 920px; margin: auto; padding: 30px 20px; }
+
+    .info-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .info-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border-top: 4px solid #C0392B;
+    }
+
+    .info-card h3 { color: #C0392B; margin-bottom: 6px; }
+    .info-card p  { color: #64748B; font-size: 14px; }
+
+    .form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .form-card h2 { text-align: center; color: #17365D; margin-bottom: 20px; font-size: 20px; }
+
+    .inputs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #17365D;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid #CBD5E1;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: border 0.2s;
+    }
+
+    input:focus, select:focus { border-color: #C0392B; outline: none; }
+
+    .predict-btn {
+        width: 100%;
+        padding: 15px;
+        margin-top: 25px;
+        background: linear-gradient(135deg, #C0392B, #17365D);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 17px;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        transition: opacity 0.2s;
+    }
+
+    .predict-btn:hover   { opacity: 0.9; }
+    .predict-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .result-card {
+        display: none;
+        background: white;
+        padding: 28px;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .result-positive { border-left: 7px solid #E74C3C; background: #FFF5F5; }
+    .result-negative { border-left: 7px solid #2ECC71; background: #F0FFF4; }
+
+    .result-title    { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+    .result-conf     { font-size: 16px; color: #555; margin-bottom: 18px; }
+
+    .prob-section    { text-align: left; margin-top: 10px; }
+    .prob-label      { font-weight: bold; margin-bottom: 4px; font-size: 14px; }
+
+    .bar-wrap {
+        height: 14px; background: #E2E8F0;
+        border-radius: 10px; overflow: hidden; margin-bottom: 12px;
+    }
+
+    .bar-fill-red  { height: 100%; background: #E74C3C; border-radius: 10px; transition: width 0.6s ease; }
+    .bar-fill-green { height: 100%; background: #2ECC71; border-radius: 10px; transition: width 0.6s ease; }
+
+    .about {
+        background: white;
+        padding: 24px;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        line-height: 1.8;
+        margin-bottom: 25px;
+    }
+
+    .about h2 { color: #17365D; margin-bottom: 12px; }
+    .about ul { padding-left: 20px; }
+
+    footer {
+        text-align: center;
+        padding: 25px;
+        color: #94A3B8;
+        font-size: 13px;
+    }
+
+    .disclaimer {
+        background: #FFF3CD;
+        border-left: 5px solid #FFA500;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        margin-top: 16px;
+        color: #7D6608;
+    }
+
+    @media (max-width: 600px) {
+        .info-cards, .inputs { grid-template-columns: 1fr; }
+        header h1 { font-size: 26px; }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>❤️ Heart Disease AI Classifier</h1>
+    <p>A Machine Learning System for Predicting Heart Disease Risk Based on Medical Data</p>
+</header>
+
+<main class="container">
+
+    <!-- Info Cards -->
+    <div class="info-cards">
+        <div class="info-card">
+            <h3>🏥 1,000 Records</h3>
+            <p>Hospital synthetic patient dataset with 10 medical features</p>
+        </div>
+        <div class="info-card">
+            <h3>🤖 Random Forest</h3>
+            <p>Ensemble machine learning classifier trained on real-world features</p>
+        </div>
+        <div class="info-card">
+            <h3>📊 Binary Classification</h3>
+            <p>Predicts: Heart Disease Detected / No Heart Disease</p>
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="form-card">
+        <h2>🩺 Enter Patient Medical Information</h2>
+
+        <form id="predictionForm">
+            <div class="inputs">
+
+                <div>
+                    <label for="age">Age (years)</label>
+                    <input type="number" id="age" min="1" max="120" value="50" required>
+                </div>
+
+                <div>
+                    <label for="sex">Sex</label>
+                    <select id="sex">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="blood_pressure">Blood Pressure (mmHg)</label>
+                    <input type="number" id="blood_pressure" min="50" max="200" value="120" required>
+                </div>
+
+                <div>
+                    <label for="cholesterol">Cholesterol (mg/dL)</label>
+                    <input type="number" id="cholesterol" min="100" max="400" value="200" required>
+                </div>
+
+                <div>
+                    <label for="bmi">BMI</label>
+                    <input type="number" id="bmi" min="10" max="60" step="0.1" value="25.0" required>
+                </div>
+
+                <div>
+                    <label for="smoker">Smoker</label>
+                    <select id="smoker">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="diabetes">Diabetes</label>
+                    <select id="diabetes">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="physical_activity">Physical Activity (days/week)</label>
+                    <input type="number" id="physical_activity" min="0" max="7" value="3" required>
+                </div>
+
+                <div>
+                    <label for="family_history">Family History of Heart Disease</label>
+                    <select id="family_history">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="stress_level">Stress Level (1–10)</label>
+                    <input type="number" id="stress_level" min="1" max="10" value="5" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="predict-btn" id="predictBtn">
+                🔍 Predict Heart Disease Risk
+            </button>
+        </form>
+    </div>
+
+    <!-- Result Card -->
+    <div class="result-card" id="resultCard">
+        <div class="result-title" id="resultTitle"></div>
+        <div class="result-conf"  id="resultConf"></div>
+        <div class="prob-section">
+            <div class="prob-label">No Heart Disease: <span id="probNo"></span>%</div>
+            <div class="bar-wrap">
+                <div class="bar-fill-green" id="barNo" style="width:0%"></div>
+            </div>
+            <div class="prob-label">Heart Disease: <span id="probYes"></span>%</div>
+            <div class="bar-wrap">
+                <div class="bar-fill-red" id="barYes" style="width:0%"></div>
+            </div>
+        </div>
+        <div class="disclaimer">
+            ⚠️ <strong>Disclaimer:</strong> This is an academic machine learning demonstration.
+            It is <strong>not</strong> a substitute for professional medical advice or diagnosis.
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="about">
+        <h2>ℹ️ About This Machine Learning System</h2>
+        <p>This application uses a <strong>Random Forest Classifier</strong> trained on a
+        synthetic hospital dataset of 1,000 patient records to predict heart disease risk.</p>
+        <br>
+        <p><strong>Risk Factors Analysed:</strong></p>
+        <ul>
+            <li>Age &amp; Sex</li>
+            <li>Blood Pressure &amp; Cholesterol</li>
+            <li>BMI (Body Mass Index)</li>
+            <li>Smoking Status &amp; Diabetes</li>
+            <li>Physical Activity Level</li>
+            <li>Family History of Heart Disease</li>
+            <li>Stress Level</li>
+        </ul>
+    </div>
+
+</main>
+
+<footer>
+    Heart Disease Classification Project | Machine Learning | Pentecost University | Philip Antwi
+</footer>
+
+<script>
+    const form    = document.getElementById("predictionForm");
+    const btn     = document.getElementById("predictBtn");
+    const resCard = document.getElementById("resultCard");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        btn.disabled    = true;
+        btn.textContent = "Analysing...";
+        resCard.style.display = "none";
+
+        const payload = {
+            age:               Number(document.getElementById("age").value),
+            sex:               document.getElementById("sex").value,
+            blood_pressure:    Number(document.getElementById("blood_pressure").value),
+            cholesterol:       Number(document.getElementById("cholesterol").value),
+            bmi:               Number(document.getElementById("bmi").value),
+            smoker:            document.getElementById("smoker").value,
+            diabetes:          document.getElementById("diabetes").value,
+            physical_activity: Number(document.getElementById("physical_activity").value),
+            family_history:    document.getElementById("family_history").value,
+            stress_level:      Number(document.getElementById("stress_level").value),
+        };
+
+        try {
+            const response = await fetch("/api/predict", {
+                method:  "POST",
+                headers: { "Content-Type": "application/json" },
+                body:    JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Prediction failed.");
+
+            const isPositive = data.prediction === 1;
+
+            resCard.className = "result-card " + (isPositive ? "result-positive" : "result-negative");
+            document.getElementById("resultTitle").innerHTML =
+                isPositive
+                    ? "⚠️ HIGH RISK — HEART DISEASE DETECTED"
+                    : "✅ LOW RISK — NO HEART DISEASE DETECTED";
+            document.getElementById("resultConf").textContent =
+                `Confidence: ${data.confidence}%`;
+
+            const pNo  = data.probabilities.no_disease;
+            const pYes = data.probabilities.heart_disease;
+
+            document.getElementById("probNo").textContent  = pNo;
+            document.getElementById("probYes").textContent = pYes;
+
+            // Animate bars
+            setTimeout(() => {
+                document.getElementById("barNo").style.width  = pNo  + "%";
+                document.getElementById("barYes").style.width = pYes + "%";
+            }, 100);
+
+            resCard.style.display = "block";
+            resCard.scrollIntoView({ behavior: "smooth" });
+
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            btn.disabled    = false;
+            btn.textContent = "🔍 Predict Heart Disease Risk";
+        }
+    });
+</script>
+
+</body>
+</html>
+

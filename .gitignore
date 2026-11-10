@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+api_test_server.py
+test_predict.py
+generate_report.py
+export_pdf.py
+github_setup_instructions.py
+.vscode/
+.idea/
