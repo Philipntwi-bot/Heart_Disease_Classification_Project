@@ -1,0 +1,171 @@
+{
+  "model_type": "LogisticRegression",
+  "feature_names": [
+    "age",
+    "sex",
+    "blood_pressure",
+    "cholesterol",
+    "bmi",
+    "smoker",
+    "diabetes",
+    "physical_activity",
+    "family_history",
+    "stress_level"
+  ],
+  "scaler_mean": [
+    54.864,
+    0.468,
+    132.874,
+    221.5,
+    29.020400000000002,
+    0.532,
+    0.474,
+    2.048,
+    0.478,
+    4.876
+  ],
+  "scaler_scale": [
+    14.300681941781658,
+    0.4989749492710031,
+    26.392084495166348,
+    43.819744408200286,
+    6.394549541601816,
+    0.49897494927100305,
+    0.4993235424051224,
+    1.4204562647262322,
+    0.4995157655169654,
+    2.5924166331822516
+  ],
+  "stats": {
+    "age": {
+      "type": "numeric",
+      "min": 30.0,
+      "max": 79.0,
+      "mean": 54.86,
+      "std": 14.32
+    },
+    "sex": {
+      "type": "categorical",
+      "values": [
+        "Male",
+        "Female"
+      ],
+      "min": 0,
+      "max": 1
+    },
+    "blood_pressure": {
+      "type": "numeric",
+      "min": 90.0,
+      "max": 179.0,
+      "mean": 132.87,
+      "std": 26.42
+    },
+    "cholesterol": {
+      "type": "numeric",
+      "min": 150.0,
+      "max": 299.0,
+      "mean": 221.5,
+      "std": 43.86
+    },
+    "bmi": {
+      "type": "numeric",
+      "min": 18.1,
+      "max": 40.0,
+      "mean": 29.02,
+      "std": 6.4
+    },
+    "smoker": {
+      "type": "categorical",
+      "values": [
+        "Yes",
+        "No"
+      ],
+      "min": 0,
+      "max": 1
+    },
+    "diabetes": {
+      "type": "categorical",
+      "values": [
+        "Yes",
+        "No"
+      ],
+      "min": 0,
+      "max": 1
+    },
+    "physical_activity": {
+      "type": "numeric",
+      "min": 0.0,
+      "max": 4.0,
+      "mean": 2.05,
+      "std": 1.42
+    },
+    "family_history": {
+      "type": "categorical",
+      "values": [
+        "No",
+        "Yes"
+      ],
+      "min": 0,
+      "max": 1
+    },
+    "stress_level": {
+      "type": "numeric",
+      "min": 1.0,
+      "max": 9.0,
+      "mean": 4.88,
+      "std": 2.6
+    }
+  },
+  "coef": [
+    -0.1234577984532388,
+    0.07946260278319875,
+    -0.19782259906658922,
+    -0.06443365478762911,
+    0.028912297194323446,
+    0.15054184931048703,
+    0.03992632997603738,
+    0.04153245602178382,
+    -0.02054325687539803,
+    0.0003736244592993512
+  ],
+  "intercept": 0.1371728575624174,
+  "accuracy": 56.0,
+  "auc": 0.5054,
+  "confusion_matrix": [
+    [
+      15,
+      32
+    ],
+    [
+      12,
+      41
+    ]
+  ],
+  "classification_report": {
+    "0": {
+      "precision": 0.5555555555555556,
+      "recall": 0.3191489361702128,
+      "f1-score": 0.40540540540540543,
+      "support": 47.0
+    },
+    "1": {
+      "precision": 0.5616438356164384,
+      "recall": 0.7735849056603774,
+      "f1-score": 0.6507936507936508,
+      "support": 53.0
+    },
+    "accuracy": 0.56,
+    "macro avg": {
+      "precision": 0.558599695585997,
+      "recall": 0.546366920915295,
+      "f1-score": 0.5280995280995281,
+      "support": 100.0
+    },
+    "weighted avg": {
+      "precision": 0.5587823439878234,
+      "recall": 0.56,
+      "f1-score": 0.5354611754611756,
+      "support": 100.0
+    }
+  }
+}
